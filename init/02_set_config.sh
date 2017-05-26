@@ -14,8 +14,5 @@ echo "handoff.port = ${RIAK_HANDOFF_PORT}" | tee -a ${RIAK_CONFIG}
 echo "log.syslog = on" | tee -a ${RIAK_CONFIG}
 
 if [ -s $RIAK_USER_CONFIG ]; then
-    userconf = $(cat $RIAK_USER_CONFIG)
-    echo "Adding user config:"
-    echo $usercof
-    cat $RIAK_USER_CONFIG >> $RIAK_CONFIG
+    cat $RIAK_USER_CONFIG | tee -a ${RIAK_CONFIG}
 fi
