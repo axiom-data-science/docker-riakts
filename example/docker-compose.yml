@@ -1,0 +1,55 @@
+version: '2'
+
+services:
+
+  node1:
+    build: ..
+    container_name: riakts-node1
+    network_mode: "host"
+    volumes:
+      - "./data/node1/logs:/var/log/riak"
+      - "./data/node1/data:/var/lib/riak"
+    environment:
+      RIAK_PB_PORT: 40001
+      RIAK_HTTP_PORT: 50001
+      RIAK_HANDOFF_PORT: 60001
+      RIAK_NODE_NAME: node1
+      RIAK_EXPLORER_DEVELOPMENT_MODE: "off"
+
+  node2:
+    build: ..
+    container_name: riakts-node2
+    network_mode: "host"
+    volumes:
+      - "./data/node2/logs:/var/log/riak"
+      - "./data/node2/data:/var/lib/riak"
+    environment:
+      RIAK_PB_PORT: 40002
+      RIAK_HTTP_PORT: 50002
+      RIAK_HANDOFF_PORT: 60002
+      RIAK_NODE_NAME: node2
+      RIAK_EXPLORER_DEVELOPMENT_MODE: "off"
+
+  node3:
+    build: ..
+    container_name: riakts-node3
+    network_mode: "host"
+    volumes:
+      - "./data/node3/logs:/var/log/riak"
+      - "./data/node3/data:/var/lib/riak"
+    environment:
+      RIAK_PB_PORT: 40003
+      RIAK_HTTP_PORT: 50003
+      RIAK_HANDOFF_PORT: 60003
+      RIAK_NODE_NAME: node3
+      RIAK_EXPLORER_DEVELOPMENT_MODE: "off"
+
+  proxy:
+    image: haproxy:1.7
+    container_name: riakts-haproxy
+    network_mode: "host"
+    volumes:
+      - "./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
+    ports:
+      - "40000:40000"
+      - "50000:50000"
