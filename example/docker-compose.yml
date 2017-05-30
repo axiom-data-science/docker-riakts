@@ -14,7 +14,6 @@ services:
       RIAK_HTTP_PORT: 50001
       RIAK_HANDOFF_PORT: 60001
       RIAK_NODE_NAME: node1
-      RIAK_EXPLORER_DEVELOPMENT_MODE: "off"
 
   node2:
     build: ..
@@ -28,7 +27,6 @@ services:
       RIAK_HTTP_PORT: 50002
       RIAK_HANDOFF_PORT: 60002
       RIAK_NODE_NAME: node2
-      RIAK_EXPLORER_DEVELOPMENT_MODE: "off"
 
   node3:
     build: ..
@@ -42,7 +40,6 @@ services:
       RIAK_HTTP_PORT: 50003
       RIAK_HANDOFF_PORT: 60003
       RIAK_NODE_NAME: node3
-      RIAK_EXPLORER_DEVELOPMENT_MODE: "off"
 
   proxy:
     image: haproxy:1.7
@@ -53,3 +50,14 @@ services:
     ports:
       - "40000:40000"
       - "50000:50000"
+
+  explorer:
+    image: axiom/docker-riak-explorer
+    container_name: riakts-explorer
+    network_mode: "host"
+    volumes:
+      - "./data/explorer/logs:/var/log/riak_explorer"
+    environment:
+      RIAK_EXPLORER_DEVELOPMENT_MODE: "on"
+      RIAK_EXPLORER_PORT: 60000
+      RIAK_NODE_NAME: node1
