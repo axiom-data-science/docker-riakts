@@ -37,6 +37,7 @@ RUN curl -L "${RIAK_KEY}" | apt-key add - && \
         && \
     mkdir -p ${RIAK_SCHEMAS} && \
     mkdir -p ${RIAK_LOGS} && \
+    rm -rf /etc/service/cron && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
