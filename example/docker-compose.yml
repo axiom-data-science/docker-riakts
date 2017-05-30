@@ -57,7 +57,9 @@ services:
     network_mode: "host"
     volumes:
       - "./data/explorer/logs:/var/log/riak_explorer"
+      - "./wait.sh:/wait.sh:ro"
     environment:
       RIAK_EXPLORER_DEVELOPMENT_MODE: "on"
       RIAK_EXPLORER_PORT: 60000
       RIAK_NODE_NAME: node1
+    entrypoint: "/wait.sh localhost:50001 --strict --timeout=120 -- /sbin/my_init"
