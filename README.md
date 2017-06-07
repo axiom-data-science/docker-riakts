@@ -20,13 +20,17 @@ There are some configurable environmental variables that will set some riak sett
     listener.http.internal = 0.0.0.0:${RIAK_HTTP_PORT}
     ```
 
+*  **`RIAK_IFACE`** (default: `eth0`)
+
+    `RIAK_IFACE` is used to find the device that the `IP_ADDRESS` is pulled from, see `RIAK_NODE_NAME`.
+
 *  **`RIAK_NODE_NAME`** (default: `riak`)
 
     ```bash
     nodename = ${RIAK_NODE_NAME}@${IP_ADDRESS}
     ```
 
-    `IP_ADDRESS` is set to `ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)`.
+    `IP_ADDRESS` is set to `ip -o -4 addr list $RIAK_IFACE | awk '{print $4}' | cut -d/ -f1)`.
 
 *  **`RIAK_HANDOFF_PORT`** (default: `8099`)
 
