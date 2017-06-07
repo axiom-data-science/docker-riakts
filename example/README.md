@@ -8,6 +8,8 @@ $ docker-compose up
 
 ### Join cluster
 
+Note: adjust `eth0` for your default network interface name. On Xenial, it's `enp5s0`.
+
 ```bash
 $ IP_ADDRESS=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 $ docker exec -u riak riakts-node2 riak-admin cluster join node1@${IP_ADDRESS}
